@@ -7,6 +7,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     RESTFUL_JSON = {'cls': CustomEncoder}
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    WECHAT_TOKEN = os.environ.get('WECHAT_TOKEN')
 
 
 class ProductionConfig(Config):

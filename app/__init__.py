@@ -3,7 +3,6 @@ import logging
 from flask import Flask
 from flask.logging import default_handler
 
-from app.blueprint import register_blueprint
 from app.exception import BusinessLogicException, handle_business_exception, handle_base_exception
 # from app.models import db
 from config import config_map
@@ -36,8 +35,7 @@ def create_app(config_name: str):
         return "I'm still alive."
 
     # db.init_app(app)
-    register_blueprint(app)
-    app.register_error_handler(BusinessLogicException, handle_business_exception)
-    app.register_error_handler(Exception, handle_base_exception)
+    from app.wechat import wechat_bp
+    app.register_blueprint(wechat_bp, url_prefix='/wechat')
 
     return app

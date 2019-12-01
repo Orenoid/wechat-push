@@ -4,14 +4,13 @@ from flask import Flask
 from flask.logging import default_handler
 
 from app.exception import BusinessLogicException, handle_business_exception, handle_base_exception
-# from app.models import db
+from app.models import db
 from config import config_map
 
 from .utils import multilog
 
 
 def create_app(config_name: str):
-
     app = Flask(__name__)
     app.config.from_object(config_map[config_name])
 
@@ -34,7 +33,8 @@ def create_app(config_name: str):
     def ping_pong():
         return "I'm still alive."
 
-    # db.init_app(app)
+    db.init_app(app)
+
     from app.wechat import wechat_bp
     app.register_blueprint(wechat_bp, url_prefix='/wechat')
 

@@ -7,21 +7,16 @@ load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager, Shell
 
-from app import create_app
-
-# from app import create_app, db
-
+from app import create_app, db
 
 app = create_app(os.environ.get("FLASK_CONFIG") or "default")
 manager = Manager(app)
 
-
-# migrate = Migrate(app, db, version_table="infiai_resouce_alembic_version")
+migrate = Migrate(app, db, version_table="infiai_resouce_alembic_version")
 
 
 def make_shell_context():
-    return {"app": app}
-    # return {"app": app, "db": db}
+    return {"app": app, "db": db}
 
 
 manager.add_command("shell", Shell(make_context=make_shell_context))

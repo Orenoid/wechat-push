@@ -19,7 +19,7 @@ def get():
     try:
         check_signature(token, signature, timestamp, nonce)
     except InvalidSignatureException:
-        current_app.logger.exception('invalid')
+        current_app.logger.exception('invalid signature')
         abort(400)
 
     return echostr

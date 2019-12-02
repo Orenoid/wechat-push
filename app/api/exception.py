@@ -20,11 +20,9 @@ class BusinessLogicException(Exception):
             return result_formatter(self.data, self.status, self.message)
 
 
-def handle_business_exception(e: BusinessLogicException):
-    return jsonify(e.to_result_bean()), 200
-
-
-def handle_base_exception(e: Exception):
+def handle_api_error(e: Exception):
+    if isinstance(e, BusinessLogicException):
+        return jsonify(e.to_result_bean()), 200
     if isinstance(e, NotFound):
         return jsonify(result_formatter('URL Not Found', 404))
     if isinstance(e, MethodNotAllowed):

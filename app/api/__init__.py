@@ -3,12 +3,15 @@ import datetime
 from flask import Blueprint, current_app, request
 from flask_restful import Resource
 
-from app.models import User, Channel
+from app.api.exception import handle_api_error
+from app.models import Channel
 from app.utils.http import Api, result_formatter, success_result
 from app.utils.wechat import send_template_message, get_access_token
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
+
+api_bp.register_error_handler(Exception, handle_api_error)
 
 
 @api.resource('/push/msg')

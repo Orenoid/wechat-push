@@ -8,6 +8,9 @@ class Config:
     RESTFUL_JSON = {'cls': CustomEncoder}
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     WECHAT_TOKEN = os.environ.get('WECHAT_TOKEN')
+    APPID = os.environ.get('APPID')
+    APPSECRET = os.environ.get('APPSECRET')
+    TEMPLATE_ID = os.environ.get('TEMPLATE_ID')
 
 
 class ProductionConfig(Config):

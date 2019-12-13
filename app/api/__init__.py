@@ -1,5 +1,6 @@
 import datetime
 
+import requests
 from flask import Blueprint, current_app, request
 from flask_restful import Resource
 
@@ -37,4 +38,26 @@ class Message(Resource):
         }
         for user in users:
             send_template_message(user.openid, template_id, message_data, access_token)
+        return success_result
+
+
+@api.resource('/push/mass_msg')
+class MassMessage(Resource):
+    method_decorators = [result_formatter]
+
+    def post(self):
+
+        wechat_url = 'https://api.weixin.qq.com/cgi-bin/message/mass/sendall'
+        params = {'access_token': get_access_token(current_app.config['APPID'], current_app.config['APPSECRET'])}
+        data = {
+            'filter': {
+                'is_to_all': True
+            },
+            'text': {'content': '这是一条用于置顶订阅号的消息'},
+            'msgtype': 'text'
+        }
+        resp = requests.post(wechat_url, params=params, json=data)
+        if resp.status_code != 200 or resp.json().get('errcode') != 0:
+            current_app.logger.info(resp.text)
+            return '群发失败', 500
         return success_result

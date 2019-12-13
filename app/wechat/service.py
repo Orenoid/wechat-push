@@ -27,6 +27,7 @@ def unsubscribe_channel(openid, channel_name):
     user = User.query.filter_by(openid=openid).first()
     if user is None:
         user = create_user(openid)
+        db.session.flush()
         return  # 用户不存在，自然没有订阅频道了
 
     channel = Channel.query.filter_by(name=channel_name).first()
@@ -35,7 +36,7 @@ def unsubscribe_channel(openid, channel_name):
     if user.channels.filter(Channel.name == channel_name).count() < 1:
         return '未订阅该频道'
     user.channels.remove(channel)
-    if channel.user.count() == 0:
+    if channel.users.count() == 0:
         Channel.query.filter_by(name=channel_name).delete()
     db.session.flush()
 

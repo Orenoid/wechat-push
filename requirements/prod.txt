@@ -40,7 +40,7 @@ zipp==0.6.0
 
 # wechat
 wechatpy==1.8.3
-cryptography==2.8
+cryptography==3.2
 
 # uwsgi
 uwsgi==2.0.18

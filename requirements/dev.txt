@@ -4,7 +4,7 @@ itsdangerous==1.1.0
 Click==7.0
 Jinja2==2.10.1
 Werkzeug==0.15.5
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
 Flask-RESTful==0.3.7
 aniso8601==7.0.0
 pytz==2019.1
